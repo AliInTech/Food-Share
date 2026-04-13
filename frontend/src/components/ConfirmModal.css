@@ -1,0 +1,41 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px); /* The "Glass" effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 24px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.modal-card h3 { font-size: 1.2rem; margin-bottom: 8px; color: #1c1c1c; }
+.modal-card p { color: #696969; font-size: 0.95rem; margin-bottom: 24px; }
+
+.modal-actions { display: flex; gap: 12px; }
+
+.cancel-btn, .confirm-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.cancel-btn { background: #f4f4f4; color: #1c1c1c; }
+.confirm-btn { background: #ef4f5f; color: white; } /* Zomato Red */

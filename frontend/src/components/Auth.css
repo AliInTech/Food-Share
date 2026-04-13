@@ -1,0 +1,7 @@
+.auth-container { display: flex; justify-content: center; align-items: center; min-height: 70vh; }
+.auth-card { background: white; padding: 40px; border-radius: var(--border-radius); box-shadow: var(--shadow-soft); width: 100%; max-width: 400px; text-align: center; }
+.auth-toggle { display: flex; background: #f4f4f4; border-radius: 8px; padding: 4px; margin-bottom: 24px; }
+.auth-toggle button { flex: 1; border: none; background: none; padding: 8px; cursor: pointer; border-radius: 6px; font-weight: 600; color: var(--text-muted); }
+.auth-toggle button.active { background: white; color: var(--primary-red); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.auth-form input, .auth-form select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+.submit-btn { width: 100%; padding: 14px; background: var(--primary-red); color: white; border: none; border-radius: 8px; font-weight: 600; margin-top: 16px; cursor: pointer; }

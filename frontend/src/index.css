@@ -1,0 +1,15 @@
+:root {
+  --primary-red: #ef4f5f;
+  --bg-white: #ffffff;
+  --text-main: #1c1c1c;
+  --text-muted: #696969;
+  --shadow-soft: 0 4px 12px rgba(28, 28, 28, 0.08);
+  --border-radius: 12px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  background-color: #f8f8f8;
+  color: var(--text-main);
+}
