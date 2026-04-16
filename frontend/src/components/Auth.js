@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedin, FaGithub, FaEnvelope, FaHeart, FaLeaf, FaRocket, FaHandsHelping } from 'react-icons/fa'; 
 import './Auth.css';
 
-import myPhoto from './laraib.jpg'; 
+import myPhoto from '.frontend/public/laraib.jpg'; 
 
 /* =========================
    NEW: LOGOUT MESSAGE COMPONENT
