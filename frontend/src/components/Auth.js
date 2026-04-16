@@ -119,15 +119,16 @@ const Auth = () => {
     ];
 
     try {
-      const url = isLogin
-        ? 'http://localhost:5000/api/login'
-        : 'http://localhost:5000/api/register';
+   
+    const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    const endpoint = isLogin ? '/api/login' : '/api/register';
+    const url = `${baseURL}${endpoint}`;
 
-      const response = await axios.post(url, {
-        email,
-        password,
-        role: isLogin ? undefined : role
-      });
+    const response = await axios.post(url, {
+      email,
+      password,
+      role: isLogin ? undefined : role
+    });
 
       for (let i = 0; i < handshakeMessages.length; i++) {
         setLoadingMessage(handshakeMessages[i]);
