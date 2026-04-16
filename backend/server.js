@@ -191,6 +191,16 @@ app.post('/api/food/claim/:id', authorize('ngo'), async (req, res) => {
 
   res.json({ message: "Claimed successfully" });
 });
+/* =========================
+   HEALTH CHECK ROUTE
+========================= */
+app.get('/', (req, res) => {
+  res.json({
+    status: "Active",
+    message: "SFDP Backend is running",
+    database: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
+  });
+});
 
 /* =========================
    FINAL CONFIRM DONATION (UPDATED)
