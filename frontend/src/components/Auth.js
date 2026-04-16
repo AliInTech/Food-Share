@@ -4,8 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedin, FaGithub, FaEnvelope, FaHeart, FaLeaf, FaRocket, FaHandsHelping } from 'react-icons/fa'; 
 import './Auth.css';
 
-import myPhoto from '.frontend/public/laraib.jpg'; 
-
 /* =========================
    NEW: LOGOUT MESSAGE COMPONENT
 ========================= */
@@ -51,6 +49,9 @@ const Auth = () => {
   const [showLogoutMsg, setShowLogoutMsg] = useState(false);
   const [randomGoodbye, setRandomGoodbye] = useState("");
 
+  // Correct path for your photo in the public folder
+  const myPhoto = "/laraib.jpg";
+
   const goodbyeMessages = [
     "You’ve been logged out. Thanks for being part of something meaningful ❤️",
     "You’re logged out. Every small action counts — thanks for helping reduce food waste 🙌",
@@ -61,17 +62,14 @@ const Auth = () => {
   ];
 
   useEffect(() => {
-    // Check for logout flag in URL
     const params = new URLSearchParams(window.location.search);
     if (params.get('logout') === 'true') {
       const msg = goodbyeMessages[Math.floor(Math.random() * goodbyeMessages.length)];
       setRandomGoodbye(msg);
       setShowLogoutMsg(true);
       
-      // Clean up the URL so the message doesn't reappear on refresh
       window.history.replaceState({}, document.title, "/auth");
 
-      // Auto-hide after 6 seconds
       const timer = setTimeout(() => setShowLogoutMsg(false), 6000);
       return () => clearTimeout(timer);
     }
@@ -119,16 +117,15 @@ const Auth = () => {
     ];
 
     try {
-   
-    const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-    const endpoint = isLogin ? '/api/login' : '/api/register';
-    const url = `${baseURL}${endpoint}`;
+      const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const endpoint = isLogin ? '/api/login' : '/api/register';
+      const url = `${baseURL}${endpoint}`;
 
-    const response = await axios.post(url, {
-      email,
-      password,
-      role: isLogin ? undefined : role
-    });
+      const response = await axios.post(url, {
+        email,
+        password,
+        role: isLogin ? undefined : role
+      });
 
       for (let i = 0; i < handshakeMessages.length; i++) {
         setLoadingMessage(handshakeMessages[i]);
@@ -307,7 +304,7 @@ const Auth = () => {
             >
               {showPhoto && (
                 <div className="glitch-photo-container">
-                  <img src={myPhoto} alt="Architect" className="brutal-photo" />
+                  <img src={myPhoto} alt="Laraib Ali" className="brutal-photo" />
                   <div className="glitch-overlay"></div>
                 </div>
               )}
@@ -321,4 +318,5 @@ const Auth = () => {
     </div>
   );
 };
+
 export default Auth;
