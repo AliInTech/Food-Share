@@ -1,0 +1,132 @@
+.add-food-viewport {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 50px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.form-card {
+  background: var(--white);
+  border: 4px solid var(--black);
+  box-shadow: 15px 15px 0 var(--black);
+  width: 100%;
+  max-width: 700px;
+  overflow: hidden;
+}
+
+.form-header {
+  background: var(--black);
+  color: var(--white);
+  padding: 20px;
+  border-bottom: 4px solid var(--black);
+}
+
+.form-header h2 {
+  font-size: 2rem;
+  letter-spacing: -1px;
+}
+
+.brutal-form {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.input-group label {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--black);
+}
+
+.input-group input, 
+.input-group select, 
+.input-group textarea {
+  padding: 15px;
+  border: 3px solid var(--black);
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  background: var(--baby-pink);
+  outline: none;
+  transition: all 0.2s;
+}
+
+.input-group input:focus, 
+.input-group textarea:focus {
+  background: var(--white);
+  box-shadow: 5px 5px 0 var(--black);
+  transform: translate(-2px, -2px);
+}
+
+.submit-btn-brutal {
+  background: var(--black);
+  color: var(--white);
+  padding: 20px;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+.submit-btn-brutal:hover {
+  background: var(--hot-pink);
+  color: var(--black);
+}
+
+.submit-btn-brutal:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.mini-bot {
+  position: fixed;
+  left: 30px;
+  bottom: 30px;
+  width: 80px;
+}
+
+.mini-bot img {
+  width: 100%;
+  border: 3px solid var(--black);
+  background: var(--white);
+  border-radius: 10px;
+}
+
+.bot-speech {
+  background: var(--black);
+  color: var(--white);
+  font-size: 0.6rem;
+  padding: 5px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.blink-text {
+  font-size: 0.7rem;
+  animation: blink 1s infinite;
+  display: block;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 600px) {
+  .input-row { grid-template-columns: 1fr; }
+}

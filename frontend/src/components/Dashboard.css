@@ -1,373 +1,432 @@
-/* =========================
-   MAIN LAYOUT
-========================= */
-.dashboard {
-  padding: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --baby-pink: #ffdae9;
+  --hot-pink: #ffb6c1;
+  --black: #000000;
+  --white: #ffffff;
+  --brutal-shadow: 10px 10px 0px #000000;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--baby-pink);
+  font-family: 'Space Mono', monospace;
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+/* BACKGROUND ANIMATION */
+.pink-viewport {
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+.mesh-container {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  background-color: var(--baby-pink);
+}
+
+.moving-grid {
+  width: 200%; height: 200%;
+  background-image: 
+    linear-gradient(var(--black) 1px, transparent 1px),
+    linear-gradient(90deg, var(--black) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.05;
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-60px, -60px); }
+}
+
+.pink-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--hot-pink) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  filter: blur(80px);
+}
+
+/* NAVIGATION */
+.pink-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  background: var(--white);
+  border: 4px solid var(--black);
+  box-shadow: var(--brutal-shadow);
+  margin: 20px;
+}
+
+.nav-logo { font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; }
+.v-tag { font-size: 0.8rem; background: var(--black); color: var(--white); padding: 2px 6px; }
+
+/* HERO */
+.hero-section {
+  padding: 60px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.dash-header {
+.big-title {
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  line-height: 0.8;
+  margin-bottom: 40px;
+  text-shadow: 4px 4px 0px var(--white);
+  white-space: pre-line;
+}
+
+.search-container {
+  position: relative;
+  max-width: 800px;
+}
+
+.brutal-input {
+  width: 100%;
+  padding: 25px;
+  background: var(--white);
+  border: 4px solid var(--black);
+  box-shadow: var(--brutal-shadow);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1.4rem;
+  outline: none;
+}
+
+.input-scan-line {
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--black);
+  animation: scan-horizontal 4s infinite linear;
+}
+
+@keyframes scan-horizontal {
+  0% { left: 0; }
+  100% { left: 100%; }
+}
+
+/* CARDS */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.brutal-card {
+  background: var(--white);
+  border: 4px solid var(--black);
+  box-shadow: var(--brutal-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-top-bar {
+  background: var(--black);
+  color: var(--white);
+  padding: 8px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  font-size: 0.7rem;
 }
 
-/* =========================
-   GRID
-========================= */
-.food-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+.status-pill {
+  padding: 2px 8px;
+  font-weight: bold;
+  border: 1px solid var(--white);
 }
 
-/* =========================
-   FOOD CARD
-========================= */
-.food-card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.2s;
-}
+.card-content { padding: 30px; flex-grow: 1; }
+.card-content h3 { font-size: 1.8rem; margin-bottom: 15px; line-height: 1; }
+.card-content p { font-size: 0.9rem; opacity: 0.8; }
 
-.food-card:hover {
-  transform: translateY(-5px);
-}
+.card-actions { padding: 20px; border-top: 4px solid var(--black); background: var(--baby-pink); }
 
-.food-card h3 {
-  margin: 0 0 10px 0;
-  color: #1c1c1c;
-}
-
-.food-card p {
-  margin: 5px 0;
-  color: #696969;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-.claim-btn {
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  background: #ef4f5f;
-  color: white;
-  border: none;
-  border-radius: 6px;
+/* BUTTONS */
+button {
+  font-family: inherit;
+  text-transform: uppercase;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: 600;
+  transition: transform 0.1s;
 }
 
-.delete-btn {
+button:active { transform: translate(2px, 2px); }
+
+.btn-black-brutal {
+  background: var(--black);
+  color: var(--white);
+  border: 4px solid var(--black);
+  padding: 12px 24px;
+}
+
+.btn-white-brutal {
+  background: var(--white);
+  border: 4px solid var(--black);
+  padding: 8px 20px;
+}
+
+.btn-danger-brutal {
+  background: var(--black);
+  color: #ff4d4d;
+  border: 4px solid #ff4d4d;
   width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  background: #f4f4f4;
-  color: #696969;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s;
+  padding: 12px;
 }
 
-.delete-btn:hover {
-  background: #e5e5e5;
-  color: #ef4f5f;
-  border-color: #ef4f5f;
-}
+.btn-black-brutal:hover { background: var(--hot-pink); color: var(--black); }
 
-.logout-btn {
-  background: #eee;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* =========================
-   SEARCH BAR
-========================= */
-.search-container {
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.search-bar {
-  width: 100%;
-  padding: 12px 20px;
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  font-size: 16px;
-  outline: none;
-  transition: border 0.3s;
-}
-
-.search-bar:focus {
-  border-color: #ef4f5f;
-}
-
-/* =========================
-   OTP ACTION BUTTONS
-========================= */
-.otp-actions {
+/* ROBOT & SPEECH BUBBLE FIX */
+.robot-fixed-container {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 250px; /* Wider container to allow text space */
   display: flex;
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.accept-btn {
-  background: #E23744;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-weight: 600;
+  flex-direction: column;
+  align-items: flex-end;
   cursor: pointer;
-  transition: 0.2s;
+  z-index: 1000;
 }
 
-.accept-btn:hover {
-  transform: scale(1.03);
-  filter: brightness(1.1);
+.beautiful-robot {
+  width: 120px;
+  height: 120px;
+  border: 4px solid var(--black);
+  background: var(--white);
+  box-shadow: 6px 6px 0 var(--black);
+  border-radius: 20px;
 }
 
-.verify-btn {
-  background: rgba(255,255,255,0.1);
-  color: #E23744;
-  border: 1px solid rgba(226,55,68,0.3);
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
+.speech-bubble-pink {
+  background: var(--black);
+  color: var(--white);
+  padding: 15px;
+  font-size: 0.8rem;
+  margin-bottom: 15px;
+  text-align: left;
+  border: 2px solid var(--hot-pink);
+  box-shadow: 4px 4px 0px var(--hot-pink);
+  width: 100%; /* Take up container width */
+  position: relative;
+  line-height: 1.4;
+  word-wrap: break-word;
 }
 
-.verify-btn:hover {
-  background: rgba(226,55,68,0.1);
+/* Custom Speech Bubble Triangle (Replacement for clip-path) */
+.speech-bubble-pink::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  right: 40px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid var(--black);
 }
 
-/* =========================
-   MODAL BACKDROP
-========================= */
+/* GLITCH EFFECTS */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+}
+
+.glitch-text::before {
+  color: #0ff; z-index: -1;
+  animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+
+.glitch-text::after {
+  color: #f0f; z-index: -2;
+  animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0); }
+  20% { transform: translate(-3px, 3px); }
+  40% { transform: translate(-3px, -3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(3px, -3px); }
+  100% { transform: translate(0); }
+}
+
+/* CRT EFFECTS */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.crt-flicker {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 16, 16, 0.05);
+  pointer-events: none;
+  animation: flicker 0.1s infinite;
+  z-index: 9998;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.1; }
+  50% { opacity: 0.02; }
+  100% { opacity: 0.1; }
+}
+
+/* LOADING */
+.loading-zone {
+  text-align: center;
+  padding: 100px;
+}
+
+.spinner-brutal {
+  width: 50px; height: 50px;
+  border: 8px solid var(--black);
+  border-top-color: var(--hot-pink);
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* MODALS */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(255, 182, 193, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 2000;
   backdrop-filter: blur(5px);
 }
 
-/* =========================
-   MODAL BOX (UNIFIED)
-========================= */
-.modal-box {
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(14px);
-  border-radius: 18px;
-  padding: 25px;
-  width: 90%;
+.brutal-modal {
+  background: var(--white);
+  border: 4px solid var(--black);
+  padding: 40px;
+  box-shadow: 20px 20px 0px var(--black);
   max-width: 500px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  width: 90%;
 }
 
-/* =========================
-   FORM STYLES
-========================= */
-.modal-box input,
-.modal-box textarea {
+.brutal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+/* Update the existing .modal-overlay if it's there, or add this */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8); /* Darken background for focus */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px; /* Buffer for small screens */
+}
+
+/* Update your .brutal-modal class */
+.brutal-modal {
+  background: var(--white);
+  border: 4px solid var(--black);
+  padding: 30px;
+  box-shadow: 15px 15px 0px var(--black);
   width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.1);
-  outline: none;
-  background: rgba(255,255,255,0.6);
+  max-width: 500px;
+  
+  /* FIX: Constraints to prevent screen overflow */
+  max-height: 90vh; 
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Allows scrolling inside the modal if content is long */
 }
 
-.modal-box input:focus,
-.modal-box textarea:focus {
-  border-color: #E23744;
-  box-shadow: 0 0 0 3px rgba(226,55,68,0.15);
+/* Optional: Style the scrollbar to match your aesthetic */
+.brutal-modal::-webkit-scrollbar {
+  width: 8px;
+}
+.brutal-modal::-webkit-scrollbar-thumb {
+  background: var(--black);
 }
 
-/* =========================
-   MODAL ACTIONS
-========================= */
 .modal-actions {
   display: flex;
-  justify-content: flex-end;
-  gap: 12px;
+  gap: 10px;
   margin-top: 20px;
+  /* Keeps buttons visible at the bottom */
+  position: sticky;
+  bottom: 0;
+  background: var(--white);
+  padding-top: 10px;
 }
-
-.cancel-btn {
-  background: transparent;
-  border: none;
-  color: #666;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* =========================
-   CONFIRM BUTTON
-========================= */
-.confirm-btn {
-  background: #E23744;
+.btn-danger-brutal {
+  background: #ff4d4d;
   color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-weight: 600;
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0px #000;
+  padding: 8px 15px;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.1s;
 }
-
-.confirm-btn:hover {
-  transform: scale(1.03);
-  filter: brightness(1.1);
+.btn-danger-brutal:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000;
 }
-
-/* =========================
-   EMPTY STATE
-========================= */
-.empty-state {
+.success-card {
   text-align: center;
-  padding: 50px;
-  color: #777;
-}
-.success-checkmark {
-  width: 80px;
-  height: 115px;
-  margin: 0 auto;
+  border: 6px solid #000;
+  background: #fff;
+  padding: 40px;
 }
 
-.check-icon {
-  width: 80px;
-  height: 80px;
-  position: relative;
-  border-radius: 50%;
-  box-sizing: content-box;
-  border: 4px solid #4CAF50;
+.beautiful-robot-celebrate {
+  width: 120px;
+  height: 120px;
+  background: #ffb6c1;
+  border: 4px solid #000;
+  margin-bottom: 20px;
 }
 
-.check-icon::before {
-  top: 3px;
-  left: -2px;
-  width: 30px;
-  transform-origin: 100% 50%;
-  border-radius: 100px 0 0 100px;
+.success-speech {
+  background: #ffb6c1;
+  border: 3px solid #000;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 8px 8px 0px #000;
+  font-weight: bold;
 }
 
-.check-icon::after {
-  top: 0;
-  left: 30px;
-  width: 60px;
-  transform-origin: 0 50%;
-  border-radius: 0 100px 100px 0;
-  animation: rotate-circle 4.25s ease-in;
+.celebration-content h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #000;
 }
-
-.icon-line {
-  height: 5px;
-  background-color: #4CAF50;
-  display: block;
-  border-radius: 2px;
-  position: absolute;
-  z-index: 10;
-}
-
-.icon-line.line-tip {
-  top: 46px;
-  left: 14px;
-  width: 25px;
-  transform: rotate(45deg);
-  animation: icon-line-tip 0.75s;
-}
-
-.icon-line.line-long {
-  top: 38px;
-  right: 8px;
-  width: 47px;
-  transform: rotate(-45deg);
-  animation: icon-line-long 0.75s;
-}
-
-.icon-circle {
-  top: -4px;
-  left: -4px;
-  z-index: 10;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 4px solid rgba(76, 175, 80, 0.2);
-  box-sizing: content-box;
-  position: absolute;
-}
-
-@keyframes icon-line-tip {
-  0% { width: 0; left: 1px; top: 19px; }
-  54% { width: 0; left: 1px; top: 19px; }
-  70% { width: 50px; left: -8px; top: 37px; }
-  84% { width: 17px; left: 21px; top: 48px; }
-  100% { width: 25px; left: 14px; top: 46px; }
-}
-
-@keyframes icon-line-long {
-  0% { width: 0; right: 46px; top: 54px; }
-  65% { width: 0; right: 46px; top: 54px; }
-  84% { width: 55px; right: 0px; top: 35px; }
-  100% { width: 47px; right: 8px; top: 38px; }
-}
-/* Container for the high-end cards */
-.food-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
-}
-
-.food-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Modern Zomato-Red Button */
-.action-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: #E23744; /* Zomato Red */
-  color: white;
-}
-
-.action-btn:hover {
-  background: #c12733;
-  box-shadow: 0 4px 15px rgba(226, 55, 68, 0.3);
-}
-
-/* Status Badges */
-.status-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.status-pending { background: #fff3cd; color: #856404; }
-.status-completed { background: #d4edda; color: #155724; }
