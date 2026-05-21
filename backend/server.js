@@ -200,7 +200,7 @@ app.get('/', (req, res) => {
     message: "SFDP Backend is running",
     database: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
   });
-});
+});  
 
 /* =========================
    FINAL CONFIRM DONATION (UPDATED)
