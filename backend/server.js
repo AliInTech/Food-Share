@@ -22,7 +22,7 @@ if (!process.env.JWT_SECRET || !process.env.EMAIL_USER || !process.env.EMAIL_PAS
    DB CONNECTION
 ========================= */
 
-mongoose.connect(process.env.MONGO_URI || "https://food-share-mj52.onrender.com")
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/foodshare")
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.log("❌ DB Error:", err));
 
