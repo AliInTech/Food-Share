@@ -117,7 +117,7 @@ const Auth = () => {
     ];
 
     try {
-      const baseURL = process.env.REACT_APP_API_URL || 'https://food-share-backend-whd6.onrender.com';
+      const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
       const endpoint = isLogin ? '/api/login' : '/api/register';
       const url = `${baseURL}${endpoint}`;
 
