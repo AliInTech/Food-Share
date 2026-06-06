@@ -219,7 +219,7 @@ const Dashboard = () => {
   };
 
   // 1. Ensure foodItems is definitely an array before filtering
-  const filteredFood = Array.isArray(foodItems) 
+const filteredFood = Array.isArray(foodItems) 
   ? foodItems.filter(item => (item.title || '').toLowerCase().includes(searchQuery.toLowerCase()))
   : [];
 
