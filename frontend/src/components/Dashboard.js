@@ -218,9 +218,10 @@ const Dashboard = () => {
     }
   };
 
-  const filteredFood = foodItems.filter(item =>
-    (item.title || '').toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // 1. Ensure foodItems is definitely an array before filtering
+  const filteredFood = Array.isArray(foodItems) 
+  ? foodItems.filter(item => (item.title || '').toLowerCase().includes(searchQuery.toLowerCase()))
+  : [];
 
   return (
     <div className="pink-viewport">
