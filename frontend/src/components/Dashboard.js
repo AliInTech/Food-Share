@@ -112,7 +112,7 @@ const Dashboard = () => {
       const res = await axios.get('https://food-share-backend-file.onrender.com', { 
         headers: { Authorization: `Bearer ${token}` } 
       });
-      setFoodItems(res.data);
+      setFoodItems(Array.isArray(res.data) ? res.data : res.data.data || []);
     } catch (err) { 
       console.error("Fetch Error:", err); 
     } finally { 
