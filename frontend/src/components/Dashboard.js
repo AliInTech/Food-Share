@@ -109,7 +109,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('https://food-share-backend-file.onrender.com', { 
+      const res = await axios.get('https://food-share-backend-file.onrender.com/api/food', { 
         headers: { Authorization: `Bearer ${token}` } 
       });
       setFoodItems(Array.isArray(res.data) ? res.data : res.data.data || []);
