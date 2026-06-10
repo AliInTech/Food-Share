@@ -172,10 +172,8 @@ const Dashboard = () => {
       setSuccessMsg("TRANS_CONFIRMED: OTP has been generated for the NGO.");
       setIsSuccessOpen(true);
       fetchFood();
-    } catch (err) {
-    console.error("FULL ERROR:", err);
-    console.log("Response:", err.response?.data);
-    alert(JSON.stringify(err.response?.data || err.message));
+    } catch (err) { 
+      console.error("CONFIRMATION_FAILURE"); 
     }
   };
 
