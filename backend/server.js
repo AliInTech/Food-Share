@@ -5,8 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
-const { Resend } = require('resend');
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require('nodemailer');
 const app = express();
 
 app.use(express.json());
@@ -71,9 +70,17 @@ const Food = mongoose.model('Food', new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 }));
 
-/* =========================
-   EMAIL SETUP
-========================= */
+// =========================
+//EMAIL SETUP
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
+//========================= 
 
 
 /* =========================
@@ -229,27 +236,27 @@ app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) 
     };
 
     await food.save();
-    try {
-      await resend.emails.send({
-        from: 'onboarding@resend.dev',
-        to: food.claimedBy.email,
-        subject: `🍕 Pickup Confirmed: ${food.title}`,
-        html: `
-          <div style="font-family: Arial; padding: 20px;">
-            <h2>Food Pickup Details</h2>
-            <p>${food.title} | ${food.quantity}</p>
-            <p>${food.location}</p>
-            <hr/>
-            <p><b>Name:</b> ${fullName}</p>
-            <p><b>Phone:</b> ${mobileNumber}</p>
-            <p><b>Address:</b> ${address}</p>
-            <p><b>Pickup Time:</b> ${pickupTime}</p>
-            <p><b>Notes:</b> ${notes || "None"}</p>
-            <hr/>
-            <h2 style="color:green;">OTP: ${otp}</h2>
-          </div>
-        `
-      });
+    await transporter.sendMail({
+  from: process.env.EMAIL_USER,
+  to: food.claimedBy.email,
+  subject: `🍕 Pickup Confirmed: ${food.title}`,
+  html: `
+    <div style="font-family: Arial; padding: 20px;">
+      <h2>Food Pickup Details</h2>
+      <p>${food.title} | ${food.quantity}</p>
+      <p>${food.location}</p>
+      <hr/>
+      <p><b>Name:</b> ${fullName}</p>
+      <p><b>Phone:</b> ${mobileNumber}</p>
+      <p><b>Address:</b> ${address}</p>
+      <p><b>Pickup Time:</b> ${pickupTime}</p>
+      <p><b>Notes:</b> ${notes || "None"}</p>
+      <hr/>
+      <h2 style="color:green;">OTP: ${otp}</h2>
+    </div>
+  
+});
+console.log("✅ Email sent to:", food.claimedBy.email);
       console.log("✅ Email sent to:", food.claimedBy.email);
     } catch (emailErr) {
       console.log("❌ Email failed:", emailErr.message);
