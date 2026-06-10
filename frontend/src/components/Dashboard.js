@@ -137,7 +137,7 @@ const Dashboard = () => {
   const handleClaim = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`https://food-share-backend-file.onrender.com/food/claim/${id}`, {}, { 
+      await axios.post(`https://food-share-backend-file.onrender.com/api/food/claim/${id}`, {}, { 
         headers: { Authorization: `Bearer ${token}` } 
       });
       setSuccessMsg("CLAIM_SUCCESS: Resource locked and pending donor verification.");
@@ -165,7 +165,7 @@ const Dashboard = () => {
   const handleAcceptSubmit = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`https://food-share-backend-file.onrender.com/food/confirm-donation/${selectedFood._id}`, formData, { 
+      await axios.post(`https://food-share-backend-file.onrender.com/api/food/confirm-donation/${selectedFood._id}`, formData, { 
         headers: { Authorization: `Bearer ${token}` } 
       });
       setAcceptOpen(false);
@@ -187,7 +187,7 @@ const Dashboard = () => {
   const handleFinalVerify = async (otpValue) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`https://food-share-backend-file.onrender.com/food/verify-otp`, 
+      await axios.post(`https://food-share-backend-file.onrender.com/api/food/verify-otp`, 
         { foodId: activeOtpId, otp: otpValue }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -208,7 +208,7 @@ const Dashboard = () => {
   const handleConfirmPurge = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`https://food-share-backend-file.onrender.com/food/${itemToDelete._id}`, { 
+      await axios.delete(`https://food-share-backend-file.onrender.com/api/food/${itemToDelete._id}`, { 
         headers: { Authorization: `Bearer ${token}` } 
       });
       setIsPurgeModalOpen(false);
