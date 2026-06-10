@@ -208,10 +208,16 @@ app.get('/', (req, res) => {
    FINAL CONFIRM DONATION (UPDATED)
 ========================= */
 app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) => {
+  console.log("===== CONFIRM DONATION HIT =====");
+  console.log("Food ID:", req.params.id);
+  console.log("Body:", req.body);
   const { fullName, mobileNumber, address, pickupTime, notes } = req.body;
 
   try {
     const food = await Food.findById(req.params.id).populate('claimedBy');
+    console.log("Food:", food);
+    console.log("ClaimedBy:", food?.claimedBy);
+    console.log("Email:", food?.claimedBy?.email);
     if (!food) return res.status(404).json({ message: "Food not found" });
 
     if (food.donor.toString() !== req.user.id) {
