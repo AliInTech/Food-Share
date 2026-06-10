@@ -24,8 +24,8 @@ const AddFood = () => {
     setIsSubmitting(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.post('https://food-share-backend-file.onrender.com/api/food', formData, {
-        headers: { Authorization: `Bearer ${token}` }
+      await axios.post('https://food-share-backend-whd6.onrender.com/api/food', formData, {
+      headers: { Authorization: `Bearer ${token}` }
       });
       navigate('/dashboard');
     } catch (err) {
