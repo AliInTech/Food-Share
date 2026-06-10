@@ -219,7 +219,8 @@ app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) 
     if (food.donor.toString() !== req.user.id) {
       return res.status(403).json({ message: "Not your food" });
     }
-     if (!food.claimedBy) {
+
+    if (!food.claimedBy) {
       return res.status(400).json({ message: "No NGO has claimed this food yet" });
     }
 
@@ -227,48 +228,27 @@ app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) 
 
     food.status = 'pending_confirmation';
     food.otp = otp;
-    food.pickupDetails = {
-      fullName,
-      mobileNumber,
-      address,
-      pickupTime,
-      notes
-    };
+    food.pickupDetails = { fullName, mobileNumber, address, pickupTime, notes };
 
     await food.save();
-    await transporter.sendMail({
-  from: process.env.EMAIL_USER,
-  to: food.claimedBy.email,
-  subject: `🍕 Pickup Confirmed: ${food.title}`,
-  html: `
-    <div style="font-family: Arial; padding: 20px;">
-      <h2>Food Pickup Details</h2>
-      <p>${food.title} | ${food.quantity}</p>
-      <p>${food.location}</p>
-      <hr/>
-      <p><b>Name:</b> ${fullName}</p>
-      <p><b>Phone:</b> ${mobileNumber}</p>
-      <p><b>Address:</b> ${address}</p>
-      <p><b>Pickup Time:</b> ${pickupTime}</p>
-      <p><b>Notes:</b> ${notes || "None"}</p>
-      <hr/>
-      <h2 style="color:green;">OTP: ${otp}</h2>
-    </div>
-  
-});
-console.log("✅ Email sent to:", food.claimedBy.email);
-      console.log("✅ Email sent to:", food.claimedBy.email);
-    } catch (emailErr) {
-      console.log("❌ Email failed:", emailErr.message);
-    }
 
- 
+    try {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: food.claimedBy.email,
+        subject: 'Pickup Confirmed: ' + food.title,
+        html: '<div style="font-family: Arial; padding: 20px;"><h2>Food Pickup Details</h2><p>' + food.title + ' | ' + food.quantity + '</p><p>' + food.location + '</p><hr/><p><b>Name:</b> ' + fullName + '</p><p><b>Phone:</b> ' + mobileNumber + '</p><p><b>Address:</b> ' + address + '</p><p><b>Pickup Time:</b> ' + pickupTime + '</p><p><b>Notes:</b> ' + (notes || 'None') + '</p><hr/><h2 style="color:green;">OTP: ' + otp + '</h2></div>'
+      });
+      console.log("Email sent to: " + food.claimedBy.email);
+    } catch (emailErr) {
+      console.log("Email failed: " + emailErr.message);
+    }
 
     res.json({ message: "Confirmation sent successfully", food });
 
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -315,4 +295,4 @@ app.delete('/api/food/:id', authorize('donor'), async (req, res) => {
    SERVER START
 ========================= */
 const PORT = process.env.PORT || 5000;
-app.listen(PORT,'0.0.0.0', () => console.log(`🚀 Server running on ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log('Server running on port ' + PORT));
