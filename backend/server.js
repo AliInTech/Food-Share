@@ -9,7 +9,9 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  
+));
 
 /* =========================
    ENV CHECK
@@ -21,7 +23,8 @@ if (!process.env.JWT_SECRET || !process.env.EMAIL_USER || !process.env.EMAIL_PAS
 /* =========================
    DB CONNECTION
 ========================= */
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/foodshare")
+
+mongoose.connect(process.env.MONGO_URI || "mongodb+srv://foodshare-app:8766237224@cluster0.pfo3g2z.mongodb.net/?appName=Cluster0")
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.log("❌ DB Error:", err));
 
@@ -190,6 +193,16 @@ app.post('/api/food/claim/:id', authorize('ngo'), async (req, res) => {
 
   res.json({ message: "Claimed successfully" });
 });
+/* =========================
+   HEALTH CHECK ROUTE
+========================= */
+app.get('/', (req, res) => {
+  res.json({
+    status: "Active",
+    message: "SFDP Backend is running",
+    database: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
+  });
+});  
 
 /* =========================
    FINAL CONFIRM DONATION (UPDATED)
@@ -203,6 +216,9 @@ app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) 
 
     if (food.donor.toString() !== req.user.id) {
       return res.status(403).json({ message: "Not your food" });
+    }
+     if (!food.claimedBy) {
+      return res.status(400).json({ message: "No NGO has claimed this food yet" });
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -253,7 +269,7 @@ app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) 
 
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message:err.message });
   }
 });
 
@@ -300,4 +316,4 @@ app.delete('/api/food/:id', authorize('donor'), async (req, res) => {
    SERVER START
 ========================= */
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on ${PORT}`));
+app.listen(PORT,'0.0.0.0', () => console.log(`🚀 Server running on ${PORT}`));
