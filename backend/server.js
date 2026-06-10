@@ -269,7 +269,7 @@ app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) 
 
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message:err.message "Server error" });
+    res.status(500).json({ message:err.message });
   }
 });
 
