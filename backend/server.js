@@ -217,6 +217,9 @@ app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) 
     if (food.donor.toString() !== req.user.id) {
       return res.status(403).json({ message: "Not your food" });
     }
+     if (!food.claimedBy) {
+      return res.status(400).json({ message: "No NGO has claimed this food yet" });
+    }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -266,7 +269,7 @@ app.post('/api/food/confirm-donation/:id', authorize('donor'), async (req, res) 
 
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message:err.message "Server error" });
   }
 });
 
